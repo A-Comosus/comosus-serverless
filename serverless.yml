@@ -7,7 +7,7 @@ provider:
 
 functions:
   sendEmail:
-    handler: handler.sendEmail
+    handler: functions/sendEmail.sendEmail
     events:
       - httpApi:
           path: /
