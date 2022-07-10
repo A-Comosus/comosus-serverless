@@ -35,7 +35,7 @@ export const sendEmail: Handler = async (event: any) => {
       secure: true,
       auth: {
         user: "apikey",
-        pass: "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",
+        pass: process.env.SENDGRID_API_KEY,
       },
     });
 
