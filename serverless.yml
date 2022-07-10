@@ -12,6 +12,8 @@ functions:
       - httpApi:
           path: /
           method: get
+    environment: ${file(env.json)}
+
 
 plugins:
   - serverless-plugin-typescript
