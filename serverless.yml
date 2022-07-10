@@ -1,5 +1,3 @@
-org: norriswu
-app: comosus-serverless
 service: comosus-serverless
 frameworkVersion: '3'
 
