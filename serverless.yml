@@ -6,8 +6,8 @@ provider:
   runtime: nodejs14.x
 
 functions:
-  hello:
-    handler: handler.hello
+  sendEmail:
+    handler: handler.sendEmail
     events:
       - httpApi:
           path: /
