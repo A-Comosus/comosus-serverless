@@ -1,5 +1,3 @@
-org: norriswu
-app: comosus-serverless
 service: comosus-serverless
 frameworkVersion: '3'
 
@@ -8,12 +6,14 @@ provider:
   runtime: nodejs14.x
 
 functions:
-  hello:
-    handler: handler.hello
+  sendEmail:
+    handler: functions/sendEmail.sendEmail
     events:
       - httpApi:
           path: /
           method: get
+    environment: ${file(env.json)}
+
 
 plugins:
   - serverless-plugin-typescript

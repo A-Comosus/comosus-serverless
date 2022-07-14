@@ -1,0 +1,8 @@
+{
+  "body": {
+    "to": "miao.zhao.d@gmail.com",
+    "subject": "Reset Password",
+    "text": "Hello world?",
+    "html": "<b>Hello world?</b>"
+  }
+}
