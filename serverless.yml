@@ -1,19 +1,19 @@
 service: comosus-serverless
-frameworkVersion: '3'
+frameworkVersion: "3"
+useDotenv: true
 
 provider:
   name: aws
   runtime: nodejs14.x
+  region: ap-southeast-2
 
 functions:
   sendEmail:
-    handler: functions/sendEmail.sendEmail
+    handler: functions/sendEmail/index.sendEmail
     events:
       - httpApi:
-          path: /
-          method: get
-    environment: ${file(env.json)}
-
+          path: /send-email
+          method: post
 
 plugins:
   - serverless-plugin-typescript
