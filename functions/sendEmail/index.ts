@@ -72,12 +72,14 @@ export const sendEmail: Handler = async (event: any) => {
       }),
     };
   } catch (err) {
-    console.log("Function error with unhandled exception...", err.message);
+    const { message } = err as Error;
+
+    console.log("Function error with unhandled exception...", message);
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({
-        message: `Function errored when processing this request. ${err.message}`,
+        message: `Function errored when processing this request. ${message}`,
       }),
     };
   }
