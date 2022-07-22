@@ -14,6 +14,12 @@ functions:
       - httpApi:
           path: /send-email
           method: post
+  getGitHubOrgInfo:
+    handler: functions/getGitHubOrgInfo/index.handler
+    events:
+      - httpApi:
+          path: /github-info
+          method: get
 
 plugins:
   - serverless-plugin-typescript
