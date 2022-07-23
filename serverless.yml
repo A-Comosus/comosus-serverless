@@ -8,13 +8,13 @@ provider:
   region: ap-southeast-2
 
 functions:
-  sendEmail:
+  send-email:
     handler: functions/sendEmail/index.sendEmail
     events:
       - httpApi:
           path: /send-email
           method: post
-  getProjectInfo:
+  get-project-info:
     handler: functions/getProjectInfo/index.handler
     events:
       - httpApi:
