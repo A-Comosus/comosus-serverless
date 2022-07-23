@@ -1,6 +1,7 @@
 import { Handler } from "aws-lambda";
 import {
   getOrg,
+  getTeamMembers,
   getOrgMember,
   getMembers,
   getRepos,
@@ -9,6 +10,7 @@ import {
 
 export const handler: Handler = async () => {
   const headers = {
+    "Access-Control-Allow-Origin": "*",
     "content-type": "application/json",
   };
 
@@ -16,9 +18,9 @@ export const handler: Handler = async () => {
     console.log("Receiving request to get project info from Github...");
 
     console.log("Fetching organisation info...");
-    const orgInfo = await getOrg();
+    const org = await getOrg();
     console.log("Fetching team member info...");
-    const members = await getMembers(await getOrgMember());
+    const teams = await getTeamMembers();
     console.log("Fetching repo info...");
     const repos = await getRepoLanguages(await getRepos());
 
@@ -27,8 +29,8 @@ export const handler: Handler = async () => {
       statusCode: 200,
       headers,
       body: JSON.stringify({
-        ...orgInfo,
-        members,
+        org,
+        teams,
         repos,
       }),
     };
