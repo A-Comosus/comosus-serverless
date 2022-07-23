@@ -5,6 +5,7 @@ useDotenv: true
 provider:
   name: aws
   runtime: nodejs14.x
+  stage: dev
   region: ap-southeast-2
 
 functions:
@@ -14,8 +15,11 @@ functions:
       - httpApi:
           path: /send-email
           method: post
+
   get-project-info:
     handler: functions/getProjectInfo/index.handler
+    environment:
+      GITHUB_PAT: some value
     events:
       - httpApi:
           path: /project-info
