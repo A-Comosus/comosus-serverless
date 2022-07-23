@@ -31,6 +31,63 @@ export async function getOrg() {
   };
 }
 
+export async function getTeams() {
+  const { data } = await axiosClient.get("/orgs/a-comosus/teams");
+
+  return data.map(({ name, slug, drescription }) => ({
+    name,
+    slug,
+    drescription,
+  }));
+}
+
+export async function getTeamMembers() {
+  const teams = await getTeams();
+  return await Promise.all(
+    teams.map(async (team) => {
+      const { data: _members } = await axiosClient.get(
+        `/orgs/a-comosus/teams/${team.slug}/members`
+      );
+
+      const members = await Promise.all(
+        _members.map(async ({ login: _login }) => {
+          const member = await axiosClient.get(`/users/${_login}`);
+
+          const {
+            login,
+            name,
+            avatar_url,
+            html_url,
+            blog,
+            location,
+            email,
+            bio,
+            twitter_username,
+            created_at,
+            updated_at,
+          } = member.data;
+
+          return {
+            login,
+            name,
+            avatar_url,
+            html_url,
+            blog,
+            location,
+            email,
+            bio,
+            twitter_username,
+            created_at,
+            updated_at,
+          };
+        })
+      );
+
+      return { ...team, members };
+    })
+  );
+}
+
 export async function getOrgMember() {
   const { data } = await axiosClient.get("/orgs/a-comosus/members");
   return data.map(({ login }) => ({
