@@ -1,5 +1,11 @@
 import { Handler } from "aws-lambda";
-import { getOrg, getOrgMember, getRepos, getRepoLanguages } from "./githubAPI";
+import {
+  getOrg,
+  getOrgMember,
+  getMembers,
+  getRepos,
+  getRepoLanguages,
+} from "./githubAPI";
 
 export const handler: Handler = async () => {
   const headers = {
@@ -10,7 +16,7 @@ export const handler: Handler = async () => {
     console.log("Receiving request to get Github organisation info...");
 
     const orgInfo = await getOrg();
-    const members = await getOrgMember();
+    const members = await getMembers(await getOrgMember());
     const repos = await getRepoLanguages(await getRepos());
 
     return {
