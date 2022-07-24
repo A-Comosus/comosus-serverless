@@ -34,10 +34,10 @@ export async function getOrg() {
 export async function getTeams() {
   const { data } = await axiosClient.get("/orgs/a-comosus/teams");
 
-  return data.map(({ name, slug, drescription }) => ({
+  return data.map(({ name, slug, description }) => ({
     name,
     slug,
-    drescription,
+    description,
   }));
 }
 
