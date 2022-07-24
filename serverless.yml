@@ -6,6 +6,16 @@ provider:
   name: aws
   runtime: nodejs14.x
   region: ap-southeast-2
+  apiGateway:
+    binaryMediaTypes:
+      - "multipart/form-data"
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - s3:*
+          Resource: "*"
 
 functions:
   sendEmail:
@@ -14,6 +24,23 @@ functions:
       - httpApi:
           path: /send-email
           method: post
+  uploadFile:
+    handler: functions/uploadFile/index.uploadFile
+    events:
+      - http:
+          path: /file-upload
+          method: post
+          cors: true
+    environment:
+      BUCKET: file-upload-bucket-acomosus
+
+resources:
+  Resources:
+    FileUploadBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: file-upload-bucket-acomosus
+        AccessControl: PublicRead
 
 plugins:
   - serverless-plugin-typescript
