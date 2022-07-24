@@ -148,13 +148,38 @@ export async function getRepos() {
 }
 
 export async function getRepoLanguages(repos: GitHubOrgRepo[]) {
-  const getLanguages = repos.map(({ name }) => {
-    return axiosClient.get(`/repos/a-comosus/${name}/languages`);
+  const languageColor = {
+    TypeScript: "#3396F1",
+    JavaScript: "#9DDE66",
+    SCSS: "#E082B2",
+    Shell: "#FDF07F",
+    Solidity: "#AA6746",
+  };
+
+  const languageResponses = await Promise.all(
+    repos.map(({ name }) => {
+      return axiosClient.get(`/repos/a-comosus/${name}/languages`);
+    })
+  );
+
+  const languages = languageResponses.map(({ data }) => {
+    const arr: any[] = [];
+    const max: number = Object.keys(data)
+      .map((key) => data[key])
+      .reduce((prev, curr) => prev + curr);
+
+    for (const [key, value] of Object.entries(data)) {
+      arr.push({
+        language: key,
+        weight: (value as number) / max,
+        defaultColor: languageColor[key],
+      });
+    }
+    return arr;
   });
 
-  const languages = await Promise.all(getLanguages);
   return repos.map((repo, index) => ({
     ...repo,
-    languages: languages[index].data,
+    languages: languages[index],
   }));
 }
