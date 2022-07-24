@@ -8,10 +8,7 @@ This repo will house a range of serverless functions for the a-comosus project
 -- an example of <event_path>: `events/event.json`
 -- an example of <function_name>: `sendEmail`, which can be found under `functions` in the `serverless.yml` file
 - A global unique bucket name is needed 👻
-- If you're getting any errors like below when deploying the function, please folow this [link](https://sharp.pixelplumbing.com/install#aws-lambda) to run the commands after `npm i` as instructed on sharp's documentation, then deploy again, the error should be fixed 🤗
-```
-"errorMessage": "\nSomething went wrong installing the \"sharp\" module\n\nCannot find module '../build/Release/sharp-linux-x64.node'\nRequire stack:\n- /var/task/node_modules/sharp/lib/sharp.js\n- /var/task/node_modules/sharp/lib/constructor.js\n- /var/task/node_modules/sharp/lib/index.js\n- /var/task/uploadFile.js\n- /var/runtime/UserFunction.js\n- /var/runtime/index.js\n\nPossible solutions:\n- Install with verbose logging and look for errors: \"npm install --ignore-scripts=false --foreground-scripts --verbose sharp\"\n- Install for the current linux-x64 runtime: \"npm install --platform=linux --arch=x64 sharp\"\n- Consult the installation documentation: https://sharp.pixelplumbing.com/install"
-```
+
 ## `env.json`:
 Contact the author to get all the secrets 🤫   
 ```
