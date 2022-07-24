@@ -1,52 +1,31 @@
 import { Handler } from "aws-lambda";
 import * as AWS from "aws-sdk";
+import * as parser from "lambda-multipart-parser";
 import * as sharp from "sharp";
 
 const s3 = new AWS.S3();
 
 export const uploadFile: Handler = async event => {
   console.log("uploadFile event ...", event);
-  const { body } = event;
-  let requestBody = body;
-  if (typeof body !== "object") {
-    console.log("Request body is not valid, transforming....");
-    try {
-      requestBody = JSON.parse(body);
-    } catch (e) {
-      console.error("Failed when transforming request body.", e);
-      return {
-        statusCode: 500,
-        body: JSON.stringify(
-          {
-            message: `Function errored when transforming request body to object. [typeof requestBody: ${typeof body}]`,
-            requestBody,
-          },
-          null,
-          2
-        ),
-      };
-    }
-  }
+  const result = await parser.parse(event);
+  console.log("Parsed event as result ...", result);
 
-  if (!requestBody.file || !requestBody.mime) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({
-        message: `Invalid body request`,
-        requestBody: body,
-      }),
-    };
-  }
+  const { user_id, width, height } = result;
+  const { content } = result.files[0];
 
   try {
-    const { file, user_id, mime } = requestBody;
-    let buffer = Buffer.from(file, "base64");
-    const fileName = `${user_id}.${mime}`;
     const bucketName = process.env.BUCKET;
+    const fileName = `${user_id}.jpg`;
 
-    const imageMimes = ["image/jpeg", "image/png", "image/jpg"];
-    if (imageMimes.includes(mime)) {
-      buffer = await sharp(buffer)
+    let buffer;
+    if (width && height) {
+      buffer = await sharp(content)
+        .resize(parseInt(width), parseInt(height))
+        .toFormat("jpg")
+        .jpeg({ quality: 90 })
+        .toBuffer();
+    } else {
+      buffer = await sharp(content)
         .resize(500, 500)
         .toFormat("jpg")
         .jpeg({ quality: 90 })
@@ -59,7 +38,6 @@ export const uploadFile: Handler = async event => {
         Key: fileName,
         ACL: "public-read",
         Body: buffer,
-        ContentType: mime,
       } as AWS.S3.PutObjectRequest)
       .promise();
 
@@ -70,10 +48,16 @@ export const uploadFile: Handler = async event => {
       }),
     };
   } catch (err) {
-    console.log("error", err);
+    const { message } = err as Error;
+    console.log(
+      "Upload File function error with unhandled exception...",
+      message
+    );
     return {
       statusCode: 500,
-      body: JSON.stringify({ message: err.message }),
+      body: JSON.stringify({
+        message: `Function errored when processing this request. ${message}`,
+      }),
     };
   }
 };
