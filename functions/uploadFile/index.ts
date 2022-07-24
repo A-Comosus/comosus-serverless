@@ -17,20 +17,11 @@ export const uploadFile: Handler = async event => {
     const bucketName = process.env.BUCKET;
     const fileName = `${user_id}.jpg`;
 
-    let buffer;
-    if (width && height) {
-      buffer = await sharp(content)
-        .resize(parseInt(width), parseInt(height))
-        .toFormat("jpg")
-        .jpeg({ quality: 90 })
-        .toBuffer();
-    } else {
-      buffer = await sharp(content)
-        .resize(500, 500)
-        .toFormat("jpg")
-        .jpeg({ quality: 90 })
-        .toBuffer();
-    }
+    const buffer = await sharp(content)
+      .resize(width ? parseInt(width) : 500, height ? parseInt(height) : 500)
+      .toFormat("jpg")
+      .jpeg({ quality: 90 })
+      .toBuffer();
 
     await s3
       .putObject({
