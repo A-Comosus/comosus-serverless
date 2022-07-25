@@ -2,8 +2,6 @@ import { Handler } from "aws-lambda";
 import {
   getOrg,
   getTeamMembers,
-  getOrgMember,
-  getMembers,
   getRepos,
   getRepoLanguages,
 } from "./githubAPI";

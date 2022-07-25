@@ -88,50 +88,6 @@ export async function getTeamMembers() {
   );
 }
 
-export async function getOrgMember() {
-  const { data } = await axiosClient.get("/orgs/a-comosus/members");
-  return data.map(({ login }) => ({
-    login,
-  }));
-}
-
-export async function getMembers(orgMembers: any) {
-  const getMembers = orgMembers.map(({ login }) => {
-    return axiosClient.get(`/users/${login}`);
-  });
-
-  const members = await Promise.all(getMembers);
-  return members.map(
-    ({
-      data: {
-        login,
-        name,
-        avatar_url,
-        html_url,
-        blog,
-        location,
-        email,
-        bio,
-        twitter_username,
-        created_at,
-        updated_at,
-      },
-    }) => ({
-      login,
-      name,
-      avatar_url,
-      html_url,
-      blog,
-      location,
-      email,
-      bio,
-      twitter_username,
-      created_at,
-      updated_at,
-    })
-  );
-}
-
 export async function getRepos() {
   const { data } = await axiosClient.get("/orgs/a-comosus/repos");
 
