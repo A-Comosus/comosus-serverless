@@ -5,6 +5,7 @@ useDotenv: true
 provider:
   name: aws
   runtime: nodejs14.x
+  stage: dev
   region: ap-southeast-2
   apiGateway:
     binaryMediaTypes:
@@ -18,7 +19,7 @@ provider:
           Resource: "*"
 
 functions:
-  sendEmail:
+  send-email:
     handler: functions/sendEmail/index.sendEmail
     events:
       - httpApi:
@@ -41,6 +42,15 @@ resources:
       Properties:
         BucketName: file-upload-bucket-acomosus
         AccessControl: PublicRead
+
+  get-project-info:
+    handler: functions/getProjectInfo/index.handler
+    environment:
+      GITHUB_PAT: some value
+    events:
+      - httpApi:
+          path: /project-info
+          method: get
 
 plugins:
   - serverless-plugin-typescript
