@@ -21,4 +21,4 @@ Contact the author to get all the secrets 🤫
 - set up serverless framework, follow this [link](https://www.serverless.com/framework/docs/getting-started)
 - run `sls invoke local -p <event_path> -f <function_name>` to run a function locally with sample event data
   - an example of <event_path>: `events/event.json`
-  - an example of <function_name>: `sendEmail`, which can be found under `functions` in the `serverless.yml` file
+  - an example of <function_name>: `send-email`, which can be found under `functions` in the `serverless.yml` file
