@@ -34,6 +34,15 @@ functions:
           cors: true
     environment:
       BUCKET: file-upload-bucket-acomosus
+  deleteFile:
+    handler: functions/deleteFile/index.deleteFile
+    events:
+      - http:
+          path: /file-upload
+          method: delete
+          cors: true
+    environment:
+      BUCKET: file-upload-bucket-acomosus
 
 resources:
   Resources:
