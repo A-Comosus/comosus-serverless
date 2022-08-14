@@ -34,6 +34,14 @@ export const uploadFile: Handler = async event => {
 
     return {
       statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Origin":
+          "http://localhost:3000" ||
+          "https://uat.a-comosus.link/" ||
+          "https://a-comosus.link/",
+        "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+      },
       body: JSON.stringify({
         link: `https://${bucketName}.s3.amazonaws.com/${fileName}`,
       }),
