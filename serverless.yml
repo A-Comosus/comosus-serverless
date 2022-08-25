@@ -5,7 +5,7 @@ useDotenv: true
 provider:
   name: aws
   runtime: nodejs14.x
-  stage: dev
+  stage: prod
   region: ap-southeast-2
   apiGateway:
     binaryMediaTypes:
@@ -25,24 +25,35 @@ functions:
       - httpApi:
           path: /send-email
           method: post
+    environment:
+      GITHUB_PAT: ${env:SENDGRID_API_KEY}
+
   uploadFile:
     handler: functions/uploadFile/index.uploadFile
     events:
-      - http:
+      - httpApi:
           path: /file-upload
           method: post
-          cors: true
     environment:
       BUCKET: file-upload-bucket-acomosus
+
   deleteFile:
     handler: functions/deleteFile/index.deleteFile
     events:
-      - http:
+      - httpApi:
           path: /file-upload
           method: delete
-          cors: true
     environment:
       BUCKET: file-upload-bucket-acomosus
+
+  get-project-info:
+    handler: functions/getProjectInfo/index.handler
+    environment:
+      GITHUB_PAT: ${env:GITHUB_PAT}
+    events:
+      - httpApi:
+          path: /project-info
+          method: get
 
 resources:
   Resources:
@@ -51,15 +62,6 @@ resources:
       Properties:
         BucketName: file-upload-bucket-acomosus
         AccessControl: PublicRead
-
-  get-project-info:
-    handler: functions/getProjectInfo/index.handler
-    environment:
-      GITHUB_PAT: some value
-    events:
-      - httpApi:
-          path: /project-info
-          method: get
 
 plugins:
   - serverless-plugin-typescript
