@@ -2,6 +2,12 @@ service: comosus-serverless
 frameworkVersion: "3"
 useDotenv: true
 
+params:
+  prod:
+    bucket-suffix: prod
+  dev:
+    bucket-suffix: dev
+
 provider:
   name: aws
   runtime: nodejs14.x
@@ -26,7 +32,7 @@ functions:
           path: /send-email
           method: post
     environment:
-      GITHUB_PAT: ${env:SENDGRID_API_KEY}
+      SENDGRID_API_KEY: ${env:SENDGRID_API_KEY}
 
   uploadFile:
     handler: functions/uploadFile/index.uploadFile
@@ -60,7 +66,7 @@ resources:
     FileUploadBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: file-upload-bucket-acomosus
+        BucketName: a-comosus-avatar-bucket-${param:bucket-suffix}
         AccessControl: PublicRead
 
 plugins:
