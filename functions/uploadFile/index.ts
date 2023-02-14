@@ -1,11 +1,11 @@
 import { Handler } from "aws-lambda";
 import * as AWS from "aws-sdk";
 import * as parser from "lambda-multipart-parser";
-import * as sharp from "sharp";
+import Jimp from "jimp";
 
 const s3 = new AWS.S3();
 
-export const uploadFile: Handler = async event => {
+export const uploadFile: Handler = async (event) => {
   console.log("uploadFile event ...", event);
   const result = await parser.parse(event);
   console.log("Parsed event as result ...", result);
@@ -17,18 +17,21 @@ export const uploadFile: Handler = async event => {
     const bucketName = process.env.BUCKET;
     const fileName = `${user_id}.jpg`;
 
-    const buffer = await sharp(content)
-      .resize(width ? parseInt(width) : 500, height ? parseInt(height) : 500)
-      .toFormat("jpg")
-      .jpeg({ quality: 90 })
-      .toBuffer();
+    const image = await Jimp.read(content);
+    image.resize(
+      width ? parseInt(width) : 500,
+      height ? parseInt(height) : 500
+    );
+    image.quality(90);
+
+    const processedImageBuffer = await image.getBufferAsync(Jimp.MIME_JPEG);
 
     await s3
       .putObject({
         Bucket: bucketName,
         Key: fileName,
         ACL: "public-read",
-        Body: buffer,
+        Body: processedImageBuffer,
       } as AWS.S3.PutObjectRequest)
       .promise();
 
