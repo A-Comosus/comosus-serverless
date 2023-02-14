@@ -1,12 +1,11 @@
+org: acomosus
+app: comosus-serverless
 service: comosus-serverless
 frameworkVersion: "3"
 useDotenv: true
 
-params:
-  prod:
-    bucket-suffix: prod
-  dev:
-    bucket-suffix: dev
+custom:
+  fileUploadBucket: a-comosus-avatar-bucket
 
 provider:
   name: aws
@@ -41,7 +40,7 @@ functions:
           path: /file-upload
           method: post
     environment:
-      BUCKET: file-upload-bucket-acomosus
+      BUCKET: ${self:custom.fileUploadBucket}
 
   deleteFile:
     handler: functions/deleteFile/index.deleteFile
@@ -50,7 +49,7 @@ functions:
           path: /file-upload
           method: delete
     environment:
-      BUCKET: file-upload-bucket-acomosus
+      BUCKET: ${self:custom.fileUploadBucket}
 
   get-project-info:
     handler: functions/getProjectInfo/index.handler
@@ -66,8 +65,9 @@ resources:
     FileUploadBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: a-comosus-avatar-bucket-${param:bucket-suffix}
+        BucketName: ${self:custom.fileUploadBucket}
         AccessControl: PublicRead
 
 plugins:
   - serverless-plugin-typescript
+  - serverless-offline
