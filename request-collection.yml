@@ -1,0 +1,193 @@
+_type: export
+__export_format: 4
+__export_date: 2023-02-14T06:35:18.364Z
+__export_source: insomnia.desktop.app:v2022.7.5
+resources:
+  - _id: req_2456b2e1577d4553a8cba4b2c5f2e734
+    parentId: wrk_2db9beefa63945668e3717df6ea8277e
+    modified: 1676356407529
+    created: 1676348427774
+    url: "{{ _.baseUrl }}/file-upload"
+    name: Delete File
+    description: ""
+    method: DELETE
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"user_id": "3245235"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1676348427774
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: wrk_2db9beefa63945668e3717df6ea8277e
+    parentId: null
+    modified: 1676252165559
+    created: 1676252165559
+    name: Comosus-serverless
+    description: ""
+    scope: collection
+    _type: workspace
+  - _id: req_2fef00d788cc4b54bf15982124f4239a
+    parentId: wrk_2db9beefa63945668e3717df6ea8277e
+    modified: 1676355584534
+    created: 1676348367803
+    url: "{{ _.baseUrl }}/file-upload"
+    name: Upload File
+    description: ""
+    method: POST
+    body:
+      mimeType: multipart/form-data
+      params:
+        - id: pair_7c6ca1cd70d54d7c8d33a9bcb1d500a2
+          name: user_id
+          value: "3245235"
+          description: ""
+        - id: pair_1150afed88ab41c28c208a4d9facde12
+          name: width
+          value: ""
+          description: ""
+        - id: pair_4dd3531f58c34679979f533875df4aea
+          name: height
+          value: ""
+          description: ""
+        - id: pair_f1ac36b7d1194deea92168340ac75210
+          name: file
+          value: ""
+          description: ""
+          type: file
+          fileName: C:\Users\Norris Wu\Pictures\screenshots\khl20230211104007596.png
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: multipart/form-data
+    authentication: {}
+    metaSortKey: -1676348367803
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_df1527dc800b4a10948b0c46407080ca
+    parentId: wrk_2db9beefa63945668e3717df6ea8277e
+    modified: 1676252443507
+    created: 1676252403961
+    url: "{{baseUrl}}/project-info"
+    name: Get Project Info
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1676252403961
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_15c937c4ecca4f9490e2bdc0876e6dcf
+    parentId: wrk_2db9beefa63945668e3717df6ea8277e
+    modified: 1676252477286
+    created: 1676252385390
+    url: "{{baseUrl}}/send-email"
+    name: Send Email
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |
+        {
+          "to": "norris.wu.au@outlook.com",
+          "subject": "Reset Password",
+          "text": "Hello world?",
+          "html": "<b>Hello world?</b>"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1676252385390
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_2d1fc77f2fa06fd503151692a28da366f1563983
+    parentId: wrk_2db9beefa63945668e3717df6ea8277e
+    modified: 1676252361249
+    created: 1676252165561
+    name: Base Environment
+    data:
+      baseUrl: ""
+    dataPropertyOrder:
+      "&":
+        - baseUrl
+    color: null
+    isPrivate: false
+    metaSortKey: 1676252165561
+    _type: environment
+  - _id: jar_2d1fc77f2fa06fd503151692a28da366f1563983
+    parentId: wrk_2db9beefa63945668e3717df6ea8277e
+    modified: 1676252165563
+    created: 1676252165563
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
+  - _id: spc_a61353a6ac1b4cf9828b1a40517cd2c4
+    parentId: wrk_2db9beefa63945668e3717df6ea8277e
+    modified: 1676252165559
+    created: 1676252165559
+    fileName: Comosus-serverless
+    contents: ""
+    contentType: yaml
+    _type: api_spec
+  - _id: env_6d2760b714b145d7bdaa297924618d8b
+    parentId: env_2d1fc77f2fa06fd503151692a28da366f1563983
+    modified: 1676353781577
+    created: 1676252174239
+    name: Localhost
+    data:
+      baseUrl: localhost:3000
+    dataPropertyOrder:
+      "&":
+        - baseUrl
+    color: null
+    isPrivate: false
+    metaSortKey: 1676252174239
+    _type: environment
+  - _id: env_3ee3c545e66f440085313ed990104547
+    parentId: env_2d1fc77f2fa06fd503151692a28da366f1563983
+    modified: 1676355562528
+    created: 1676353749709
+    name: Production
+    data:
+      baseUrl: https://6aufo80af9.execute-api.ap-southeast-2.amazonaws.com
+    dataPropertyOrder:
+      "&":
+        - baseUrl
+    color: null
+    isPrivate: false
+    metaSortKey: 1676353749709
+    _type: environment
