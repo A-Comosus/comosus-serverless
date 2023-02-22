@@ -2,9 +2,9 @@ org: acomosus
 app: comosus-serverless
 service: comosus-serverless
 frameworkVersion: "3"
-useDotenv: true
 
 custom:
+  environment: ${ssm:/aws/reference/secretsmanager/prod/comosus-serverless}
   fileUploadBucket: a-comosus-avatar-bucket
 
 provider:
@@ -31,7 +31,7 @@ functions:
           path: /send-email
           method: post
     environment:
-      SENDGRID_API_KEY: ${env:SENDGRID_API_KEY}
+      SENDGRID_API_KEY: ${self:custom.environment.SENDGRID_API_KEY}
 
   uploadFile:
     handler: functions/uploadFile/index.uploadFile
@@ -54,7 +54,7 @@ functions:
   get-project-info:
     handler: functions/getProjectInfo/index.handler
     environment:
-      GITHUB_PAT: ${env:GITHUB_PAT}
+      GITHUB_PAT: ${self:custom.environment.GITHUB_PAT}
     events:
       - httpApi:
           path: /project-info
