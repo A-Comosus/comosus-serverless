@@ -6,19 +6,16 @@ This repo will house a range of serverless functions for the a-comosus project
 
 All environment variables are now stored on AWS secret manager, having an IAM user with correct permission should provide you with the required variables.
 
-## How to use
+## How to set up this project?
 
-- run `yarn install` as usual to install the node_modules
-- set up serverless framework, follow this [link](https://www.serverless.com/framework/docs/getting-started)
-- run `sls invoke local -p <event_path> -f <function_name>` to run a function locally with sample event data
-  - an example of <event_path>: `events/event.json`
-  - an example of <function_name>: `send-email`, which can be found under `functions` in the `serverless.yml` file
-- A global unique bucket name is needed 👻
-- If you're getting any errors like below when deploying the function, please folow this [link](https://sharp.pixelplumbing.com/install#aws-lambda) to run the commands after `npm i` as instructed on sharp's documentation, then deploy again, the error should be fixed 🤗
+Simple, just like most of the JS projects. Simply run `yarn install` or `yarn` for short to install all the node modules. Then set up serverless framework, follow this [link](https://www.serverless.com/framework/docs/getting-started). And that's it, you are all set. 👏
 
-```
-"errorMessage": "\nSomething went wrong installing the \"sharp\" module\n\nCannot find module '../build/Release/sharp-linux-x64.node'\nRequire stack:\n- /var/task/node_modules/sharp/lib/sharp.js\n- /var/task/node_modules/sharp/lib/constructor.js\n- /var/task/node_modules/sharp/lib/index.js\n- /var/task/uploadFile.js\n- /var/runtime/UserFunction.js\n- /var/runtime/index.js\n\nPossible solutions:\n- Install with verbose logging and look for errors: \"npm install --ignore-scripts=false --foreground-scripts --verbose sharp\"\n- Install for the current linux-x64 runtime: \"npm install --platform=linux --arch=x64 sharp\"\n- Consult the installation documentation: https://sharp.pixelplumbing.com/install"
+_And of course, you will need to have the right IAM user to perform actions_
 
+## How to run these functions locally?
 
+This serverless project uses `serverless-offline` plugin, simply run `yarn offline` will spin up local instances of serverless function, which you can invoke with REST clients.
 
-```
+## How to deploy these functions?
+
+`yarn deploy:dev` will deploy the functions in development mode. `yarn deploy:prod` will deploy the functions in production mode
