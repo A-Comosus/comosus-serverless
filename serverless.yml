@@ -7,6 +7,7 @@ custom:
   environment:
     SENDGRID_API_KEY: ahu1o2nfaduonekofleqan
     GITHUB_PAT: asdnuioqregn1asnfjoa
+    SENDGRID_API: asnufoqnetguroanjdfo
   fileUploadBucket: a-comosus-avatar-bucket
 
 provider:
@@ -33,6 +34,15 @@ functions:
           method: post
     environment:
       SENDGRID_API_KEY: ${self:custom.environment.SENDGRID_API_KEY}
+
+  send-email-v2:
+    handler: functions/sendEmailV2/index.sendEmail
+    events:
+      - httpApi:
+          path: /send-email
+          method: post
+    environment:
+      SENDGRID_API_KEY: ${self:custom.environment.SENDGRID_API}
 
   uploadFile:
     handler: functions/uploadFile/index.uploadFile
