@@ -4,7 +4,9 @@ service: comosus-serverless
 frameworkVersion: "3"
 
 custom:
-  environment: ${ssm:/aws/reference/secretsmanager/prod/comosus-serverless}
+  environment:
+    SENDGRID_API_KEY: ahu1o2nfaduonekofleqan
+    GITHUB_PAT: asdnuioqregn1asnfjoa
   fileUploadBucket: a-comosus-avatar-bucket
 
 provider:
