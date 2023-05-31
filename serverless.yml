@@ -39,7 +39,7 @@ functions:
     handler: functions/sendEmailV2/index.sendEmail
     events:
       - httpApi:
-          path: /send-email
+          path: /send-email-v2
           method: post
     environment:
       SENDGRID_API_KEY: ${self:custom.environment.SENDGRID_API}
