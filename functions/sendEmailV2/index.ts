@@ -70,7 +70,11 @@ export const sendEmail: Handler = async (event: any) => {
     };
   } catch (err) {
     const { message } = err as Error;
+    console.error(err);
 
+    if (err.response) {
+      console.error(err.response.body);
+    }
     console.log("Function error with unhandled exception...", message);
     return {
       statusCode: 500,
