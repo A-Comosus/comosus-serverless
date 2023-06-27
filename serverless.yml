@@ -1,11 +1,9 @@
-org: acomosus
-app: comosus-serverless
 service: comosus-serverless
 frameworkVersion: "3"
 
 custom:
   environment: ${ssm:/aws/reference/secretsmanager/prod/comosus-serverless}
-  fileUploadBucket: a-comosus-avatar-bucket
+  fileUploadBucket: a-comosus-avatar-bucket-in-crossplane-test
 
 provider:
   name: aws
@@ -65,7 +63,11 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:custom.fileUploadBucket}
-        AccessControl: PublicRead
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: false
+        OwnershipControls:
+          Rules:
+            - ObjectOwnership: ObjectWriter
 
 plugins:
   - serverless-plugin-typescript
