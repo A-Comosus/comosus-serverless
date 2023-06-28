@@ -3,12 +3,10 @@ import * as nodemailer from "nodemailer";
 export function setupSender() {
   console.log("Preparing mail transporter...");
   const transporter = nodemailer.createTransport({
-    host: "smtp.sendgrid.net",
-    port: 465,
-    secure: true,
+    service: "Gmail",
     auth: {
-      user: "apikey",
-      pass: process.env.SENDGRID_API_KEY,
+      user: process.env.NODEMAILER_USER,
+      pass: process.env.NODEMAILER_PASS,
     },
   });
 

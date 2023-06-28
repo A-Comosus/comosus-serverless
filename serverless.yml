@@ -28,7 +28,8 @@ functions:
           path: /send-email
           method: post
     environment:
-      SENDGRID_API_KEY: ${self:custom.environment.SENDGRID_API_KEY}
+      NODEMAILER_USER: ${self:custom.environment.NODEMAILER_USER}
+      NODEMAILER_PASS: ${self:custom.environment.NODEMAILER_PASS}
 
   uploadFile:
     handler: functions/uploadFile/index.uploadFile
